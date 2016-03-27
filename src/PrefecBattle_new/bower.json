@@ -1,0 +1,10 @@
+{
+	"name": "ASP.NET",
+	"private": true,
+  "dependencies": {
+    "angular": "~1.4.7",
+    "easeljs": "*",
+    "tweenjs": "*",
+    "jquery": "*"
+  }
+}

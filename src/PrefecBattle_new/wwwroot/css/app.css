@@ -1,0 +1,286 @@
+﻿body{
+    background-color:black;
+    color:white;
+    margin: 0 auto;  
+}
+
+.area {    
+    margin: 0 auto;  
+    text-align: center;
+      
+}  
+
+
+/* エリア非表示　*/
+.invisible {
+    display:none;
+    height:0;
+    width:0;
+}
+/* ----------------
+    ヘッダ
+-----------------*/
+#header{
+    font-size:50px;
+}
+#helpBtn{
+    background-image:url(../img/help.png) ;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    width:50px;
+    height:50px;
+    margin-left:30px;
+    cursor:help;
+}
+#helpBtn:hover{
+    background-image:url(../img/question.png) ;
+}
+
+/* ----------------
+    ウィンドウ
+-----------------*/
+.selectedSortBtn {
+    width:100%;
+}
+.windowTxt{
+    color:black;
+}
+.modal-header{
+    background: #edc41f;
+}
+button.mode {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: black;
+	padding-top: 5px;
+     background: #edc41f;
+      background-image: -webkit-linear-gradient(top, #edc41f, #edc41f);
+      background-image: -moz-linear-gradient(top, #edc41f, #edc41f);
+      background-image: -ms-linear-gradient(top, #edc41f, #edc41f);
+      background-image: -o-linear-gradient(top, #edc41f, #edc41f);
+      background-image: linear-gradient(to bottom, #edc41f, #edc41f);
+    width:30%;
+}
+.windowTable{
+    width:100%;    
+}
+.windowTable tr{ 
+    text-align:center;
+}
+.windowTable th{
+     border: 2px #808080 solid; 
+     background-color:antiquewhite;
+     text-align:center;
+}
+.windowTable td{
+      border: 2px #808080 solid; 
+}
+.windowTable .none{
+    background-color:white;
+    border: 0px #808080 solid; 
+}
+.windowTable .round{
+    text-align:center;
+}
+.windowTable .title{
+    font-weight:bold;
+}
+.windowTable .tani{
+    font-style:italic;
+    text-align:right;
+}
+.srtTgt{
+    background-color:yellow;
+}
+/*ヘルプウインド*/
+.helpWindow{
+     /*border: 20px #0026ff outset;*/
+     padding: 20px;
+     background-color:lemonchiffon;
+     width:1000px;
+     /*background-image:url(../img/question.png);*/
+}
+.helpTit{
+    padding:5px;
+    font-size:30px;
+    color:indigo;
+    font:bold;
+    border-bottom:dashed 5px;
+}
+.helpTxt{
+    font-size:20px;
+    padding:5px;
+    color:black;
+}
+/* ----------------
+   キャンバスエリア　
+-----------------*/
+ #buttons{
+    top:20px;
+    position: fixed;
+    z-index: 999;
+    right:20px;
+    width: 200px;
+    padding:10px;
+    background:gray ;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:auto;
+    margin-left:auto;
+
+}
+
+/* ----------------
+    都道府県選択エリア　
+-----------------*/
+.map {
+    float:left;
+    margin-right:30px;
+}
+
+.decided{
+   
+    background-image:url(../img/kettei.png);
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.selectPrefecTable{ 
+    text-size-adjust:auto;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    vertical-align:middle;
+    width:45%;
+    margin-top:30px;
+}
+.selectPrefecTable .mainTr{
+    height:70%;
+}
+.selectPrefecTable  .prefecTd{
+     width:45%;
+     border: 4px #aaaaee outset;padding: 5px;
+     height:400px;
+}
+.popMes {
+  text-align: center;
+  font-family: "Cubano";
+  letter-spacing: .08em;
+  color: deepskyblue;
+  text-shadow: .03em .03em 1px bisque, .03em -.03em 1px bisque,-.03em -.03em 1px bisque, -.03em .03em 1px bisque,-.055em .055em 1px DarkTurquoise;
+  -webkit-mask-image: url(http://samkapila.com/texture.png);
+  font-size: 3em;
+  padding-bottom:20px;
+}
+
+.resetBtn {
+  background: #aaaaee;
+  text-shadow: 1px 1px 3px #aaaaee;
+  font-family: Arial;
+  color: #0a0a0a;
+  font-size: 10px;
+  padding: 10px 20px 10px 20px;
+  border: solid #aaaaee 2px;
+  text-decoration: none;
+  justify-content:flex-end;
+  float:right;
+}
+.resetBtn:hover {
+  background: #fafafa;
+  text-decoration: none;
+}
+input[disabled]{
+  background: #666666;
+  color:white;
+}
+input[disabled]:hover{
+  background: #666666;
+  color:white;
+}
+
+
+
+.prefecDt_Nm{
+    font:60px bold;
+    color:yellow;
+}
+.prefecDt_Cp{
+    font-size:30px;
+    height:60px;
+    font-size-adjust:initial;
+    vertical-align:bottom;
+    color:aqua;
+}
+.prefecDt_His {
+   font-weight:200;
+   font-size:30px;
+}
+
+/*======================
+    各種ボタン
+======================*/
+.startBtn {
+  background: #ff0000;
+  background-image: -webkit-linear-gradient(top, #ff0000, #fce5e5);
+  background-image: -moz-linear-gradient(top, #ff0000, #fce5e5);
+  background-image: -ms-linear-gradient(top, #ff0000, #fce5e5);
+  background-image: -o-linear-gradient(top, #ff0000, #fce5e5);
+  background-image: linear-gradient(to bottom, #ff0000, #fce5e5);
+  -webkit-border-radius: 2;
+  -moz-border-radius: 2;
+  border-radius: 2px;
+  text-shadow: 1px 1px 3px #666666;
+  font-family: Arial;
+  color: #eaff00;
+  font-size: 40px;
+  padding: 10px 10px 10px 10px;
+  border: solid #f51156 2px;
+  margin-top:70px;
+  text-decoration: none;
+  width:40%;
+}
+.startBtn:hover {
+  background: #fafafa;
+  text-decoration: none;
+}
+
+.basicBtn{
+border:1px solid #34740e; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:20px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+}
+
+.basicBtn:hover{
+ border:1px solid #224b09;
+ background-color: #7a7878; background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));
+}
+.rankingBtn{
+    color:papayawhip;
+    background-color: #008c00; background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));
+     float:right;
+     margin-top:30px;
+}
+.nxtBtn{
+    background-color: #f01b1b; 
+    margin:10px;
+    text-align:center;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.resultBtn{
+    background-color: #1fed67; 
+    margin:10px;
+    text-align:center;
+    width:100%;
+     margin-left:auto;
+    margin-right:auto;
+}
+
+/* フッター　*/
+.copylight {
+    font-family: 'Shadows Into Light', cursive;
+    text-align:right;
+    font-size:25px;
+    border-top: 1px solid red;
+
+}

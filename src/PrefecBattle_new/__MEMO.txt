@@ -1,0 +1,7 @@
+﻿・PrefecBattle_new\lib\dnx451 にinteropなどを置く
+
+
+/////リリース手順/////
+・IIS をx86に設定
+・C:\inetpub\wwwroot\_Prefec\approot\packages\System.Data.SQLite\1.0.0\lib\dnx451　にinterop
+・appsettingsのsqliteパスを書き換え

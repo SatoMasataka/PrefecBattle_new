@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html  ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+    <script src="../lib/easeljs/lib/easeljs-0.8.2.min.js"></script>
+    <script src="http://code.createjs.com/createjs-2013.05.14.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/jquery.japan-map.min.js"></script>
+    <script src="../script/controller.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+    <title>都道府県統計バトル</title>
+    
+    <script type="text/ng-template" id="W_Help">
+        <div class="modal-body helpWindow ">
+            <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+            <div class="helpTit">都道府県統計バトルとは？</div>
+            <div class="helpTxt">
+                都道府県別統計データをもとに最強の都道府県を決めようという、なんともナンセンスな試みです。
+                ひいきの都道府県同士を戦わせてみてください。
+                <br/><br />
+               <strong>〔統計データ引用元〕</strong><br/>
+               <a href="http://www.e-stat.go.jp/SG1/estat/eStatTopPortal.do">
+                    e-Start 政府統計の総合窓口: 統計でみる都道府県のすがた2015 
+               </a>
+            </div>
+            <br />
+            <div class="helpTit">ルール</div>
+            <div class="helpTxt">
+                <ul>
+                    <li>まず対戦させる都道府県を選択してください。</li>
+                    <li>1バトル5ラウンド制です。ラウンドごとにランダムに統計項目が選ばれ、その統計値で勝負します。</li>
+                    <li>統計項目が"死亡率"や"失職率"などネガティブなものであっても、統計値が高い側がそのラウンドは勝ちです。</li>
+                    <li>全ラウンド終了後に多く勝ちを取っていた側が最終的な勝者になります。</li>
+                </ul>                
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="W_Battle">
+        <div class="modal-header windowTxt">
+            <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+            <h3>バトル結果</h3>
+        </div>
+        <div class="modal-body  windowTxt">
+            <table class="windowTable">
+                <tr>
+                    <th class="col-xs-3">{{BattleDispResult.Prefec_A_Nm}}</th>
+                    <th class="none"/>
+                    <th class="col-xs-3">{{BattleDispResult.Prefec_B_Nm}}</th>
+                </tr>
+                <tr ng-repeat="bd in BattleDispResult.BattleDetails">
+                    <td>
+                        {{bd.Value_A}}
+                        <span ng-show="bd.Value_A > bd.Value_B"><img src="../img/win.png" height="30"/></span>
+                    </td>
+                    <td>
+                        <div class="round">【ラウンド{{bd.RoundSeq}}】</div> 
+                        <div class="title">{{bd.TokeiNm}}</div> 
+                        <div class="tani">単位：{{bd.Tani}} / {{bd.Year}}年 </div>
+                    </td>
+                    <td>
+                        {{bd.Value_B}}
+                        <span ng-show="bd.Value_A < bd.Value_B"><img src="../img/win.png" height="30" /></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="W_Ranking" ng-init="sortKey='-WinPercentage' ; rankTit='勝率'">
+        <div class="modal-header windowTxt" >
+            <button type="button" class="close" ng-click="$dismiss()">&times;</button><br />            
+            <button type="button" ng-click="sortKey='-AllBattleNum';rankTit='バトル数'" class="mode">バトル数</button>
+            <button type="button" ng-click="sortKey='-WinBattleNum';rankTit='勝ち数'" class="mode">勝ち数</button>
+            <button type="button" ng-click="sortKey='-WinPercentage' ; rankTit='勝率'" class="mode">勝率</button>
+            <h3>{{rankTit}}ランキング</h3> 
+        </div>
+        <div class="modal-body  windowTxt">   
+            <table class="windowTable">
+                <tr>
+                    <th>順位</th>
+                    <th>都道府県</th>
+                    <th>バトル数</th>
+                    <th>勝ち数</th>
+                    <th>勝率</th>
+                </tr>
+                <tr ng-repeat="pre in allPrefecData | orderBy:sortKey|limitTo:15">
+                    <td>{{$index+1}}</td>
+                    <td>{{pre.PrefecNm}}</td>
+                    <td ng-class="{srtTgt:rankTit=='バトル数'}">{{pre.AllBattleNum}}</td>
+                    <td ng-class="{srtTgt:rankTit=='勝ち数'}">{{pre.WinBattleNum}}</td>
+                    <td ng-class="{srtTgt:rankTit=='勝率'}">{{pre.WinPercentage | number:2}}</td>
+                </tr>
+            </table>
+        </div>
+    </script>
+    
+</head>
+
+<body ng-controller="mainCtrl" ng-init="initDisp();canOneMore=false">
+    <span id="header" class="col-xs-offset-1">      
+        都道府県統計バトル
+        <img id="helpBtn" ng-click="openHelpWindow()">
+    </span>
+    <!-- アニメーションエリア　-->
+    <div id="resultArea" ng-class="{invisible:isShowMap}" class="area" >
+        <canvas id="main-canvas" width=1500 height=800 ng-click="mainCanvasClick()"></canvas>
+    </div>
+    <div id="buttons" ng-class="{invisible:!canOneMore}">
+        <input type="button" value="バトル結果" ng-click="openBattleResultWindow()" class="basicBtn resultBtn" /><br>
+        <input type="button" value="もう一度バトる" ng-click="OneMoreBattle()"  class="basicBtn nxtBtn" />
+    </div>
+
+    <!-- 都道府県選択エリア　-->
+    <div id="mapArea" ng-class="{invisible:!isShowMap}" class="area" >
+        <div id="map" ng-mouseover="prefecToTmpModel()" ng-mousemove="prefecToTmpModel()" ng-click="prefecToModel()" class="map" ></div>
+        <table class="col-xs-offset-2  selectPrefecTable">
+            <tr><th class="popMes" colspan="3">対戦都道府県を選択してください</th></tr>
+            <tr class="mainTr">
+                
+                <!--都道府県A-->
+                <td ng-class="{decided:BattleRequest.prefecA !=''}"  class="prefecTd">
+                    <div ng-show="DispPrefecA != ''">
+                        <div class=" prefecDt_Cp"> {{DispPrefecA.PrefecCopy}} </div><br>
+                        <div class="prefecDt_Nm">{{DispPrefecA.PrefecNm}}</div><br>
+                        <div class="prefecDt_His">
+                            {{DispPrefecA.AllBattleNum}}戦　{{DispPrefecA.WinBattleNum}}勝　<br>
+                            勝率：{{DispPrefecA.WinPercentage | number:2 }} ％
+                        </div>
+                    </div>
+                    <div ng-show="DispPrefecA == ''"><h1>NOT SELECTED</h1></div>
+                </td>
+                <td valign="middle" ><img src="../img/versus.png" width="100"/></td>
+                <!--都道府県B-->
+                <td ng-class="{decided:BattleRequest.prefecB !=''}"  class="prefecTd">
+                    <div ng-show="DispPrefecB != ''">
+                        <div class="prefecDt_Cp">{{DispPrefecB.PrefecCopy}}</div><br>
+                        <div class="prefecDt_Nm">{{DispPrefecB.PrefecNm}}</div><br>
+                        <div class="prefecDt_His">
+                            {{DispPrefecB.AllBattleNum}}戦　{{DispPrefecB.WinBattleNum}}勝　<br>
+                            勝率：{{DispPrefecB.WinPercentage | number:2 }} ％
+                        </div>
+                    </div>
+                    <div ng-show="DispPrefecB == ''"><h1>NOT SELECTED</h1></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" value="CLEAR" ng-click="BattleRequest.prefecA=''; DispPrefecA=''" class="resetBtn" />
+                </td>
+                <td></td>
+                <td>
+                    <input type="button" value="CLEAR" ng-click="BattleRequest.prefecB=''; DispPrefecB=''" class="resetBtn" />
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <!--開始ボタン-->
+                    <form name="myForm">
+                        <input type="hidden" id="prefecA" ng-model="BattleRequest.prefecA" ng-init="BattleRequest.prefecA=''" required />
+                        <input type="hidden" id="prefecB" ng-model="BattleRequest.prefecB" ng-init="BattleRequest.prefecB=''" required />
+                        <input type="submit" ng-click="battleStart()" ng-disabled="myForm.$invalid " value="バトル開始" class="startBtn"/>
+                    </form>
+                    <br>
+                    <input type="button" value="ランキング" ng-click="openRankingWindow()" class="basicBtn rankingBtn" />
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+    <br>
+    <p class="copylight col-xs-12"   >
+                <a href="../../toppage/index.html">powered by SAT Works</a>
+    </p>
+</body>
+</html>

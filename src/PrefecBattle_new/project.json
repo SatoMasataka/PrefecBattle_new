@@ -1,0 +1,38 @@
+﻿{
+  "commands": {
+    "web": "Microsoft.AspNet.Server.Kestrel"
+  },
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "webroot": "wwwroot",
+  "dependencies": {
+    "EntityFramework.Commands": "7.0.0-beta5",
+    "EntityFramework.SqlServer": "7.0.0-beta5",
+    "Microsoft.AspNet.Mvc": "6.0.0-beta5",
+    "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
+    "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-beta5",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-beta5",
+    "System.Data.SQLite": "1.0.0"
+  },
+  "exclude": [
+    "wwwroot",
+    "node_modules"
+  ],
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0",
+        "System.Data": "4.0.0.0"
+      },
+      "dependencies": {
+      }
+    }
+  },
+  "publishExclude": [
+    "**.user",
+    "**.vspscc"
+  ],
+  "version": "1.0.0-*"
+}

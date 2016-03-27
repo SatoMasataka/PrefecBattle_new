@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "dnx451": {
+      "bin": {
+        "assembly": "../../lib/dnx451/System.Data.SQLite.EF6.dll"
+      },
+      "dependencies": {
+        "System.Data.SQLite": "1.0.0-*"
+      }
+    }
+  }
+}
